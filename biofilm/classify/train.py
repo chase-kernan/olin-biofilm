@@ -3,7 +3,9 @@ import os
 import numpy as np
 from sklearn.cross_validation import train_test_split
 from sklearn.preprocessing import StandardScaler
-from classify import flat
+from biofilm.classify import flat
+
+__all__ = ['CLASSES', 'train', 'train_lda']
 
 def parse_data(path):
     samples = []
@@ -14,16 +16,13 @@ def parse_data(path):
                 samples.append(sample)
     return np.array(samples)
 
-# classes
-AEROBIC = 0
-ANAEROBIC = 1
-FLAT = 2
+CLASSES = {'aerobic': 0, 'anaerobic': 1, 'flat': 2}
 
 def get_data_dir():
     import inspect
     module_file = inspect.getfile(inspect.currentframe())
     base_path = os.path.dirname(os.path.abspath(module_file))
-    return os.path.join(base_path, data)
+    return os.path.join(base_path, 'data')
 
 def get_data_and_classes():
     data_dir = get_data_dir()
@@ -32,9 +31,10 @@ def get_data_and_classes():
     flat_data = flat.generate(aerobic_data.shape[1], num_samples=100)
 
     data = np.vstack((aerobic_data, anaerobic_data, flat_data))
-    classes = np.hstack((AEROBIC*np.ones(aerobic_data.shape[0]),
-                         ANAEROBIC*np.ones(anaerobic_data.shape[0]),
-                         FLAT*np.ones(flat_data.shape[0])))
+    def class_array(name, data): return CLASSES[name]*np.ones(data.shape[0])
+    classes = np.hstack((class_array('aerobic', aerobic_data),
+                         class_array('anaerobic', anaerobic_data),
+                         class_array('flat', flat_data)))
     return data, classes
 
 
@@ -70,10 +70,16 @@ def test_classifiers(n=20):
         score = np.median([test(classifier) for _ in range(n)])
         print name, score
 
-    print classifiers['LDA'].predict_proba(parse_data('classify/aerobic.txt'))
+def train_lda():
+    from sklearn.lda import LDA
 
-def train():
     data, classes = get_data_and_classes()
-    data = StandardScaler().fit_transform(data)
+    classifier = LDA()
+    classifier.fit(data, classes, store_covariance=True)
+    return classifier
 
-test_classifiers()
+train = train_lda
+
+
+if __name__ == '__main__':
+    test_classifiers()

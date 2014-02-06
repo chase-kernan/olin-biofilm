@@ -2,8 +2,9 @@
 import numpy as np
 import cv2
 import random as rdm
+from biofilm.classify import features
 
-def make_image(image_shape):
+def make_image(image_shape=(20, 256)):
     image = np.zeros(image_shape, np.uint8)
 
     height = np.clip(rdm.gauss(7, 6), 1, 13)
@@ -29,7 +30,7 @@ def generate(depth, num_samples=100, num_cols=256):
     samples = np.zeros((num_samples, depth))
     for i in range(num_samples):
         image = make_image((depth, num_cols))
-        samples[i, :] = image.sum(axis=1)/float(num_cols)
+        samples[i, :] = features.calculate(image)
     return samples
 
 def show_example():
