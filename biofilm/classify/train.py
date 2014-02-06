@@ -1,4 +1,5 @@
 
+import os
 import numpy as np
 from sklearn.cross_validation import train_test_split
 from sklearn.preprocessing import StandardScaler
@@ -18,15 +19,22 @@ AEROBIC = 0
 ANAEROBIC = 1
 FLAT = 2
 
-def get_data_and_classes():
-    aerobicData = parse_data('classify/aerobic.txt')
-    anaerobicData = parse_data('classify/anaerobic.txt')
-    flatData = flat.generate(aerobicData.shape[1], numSamples=100)
+def get_data_dir():
+    import inspect
+    module_file = inspect.getfile(inspect.currentframe())
+    base_path = os.path.dirname(os.path.abspath(module_file))
+    return os.path.join(base_path, data)
 
-    data = np.vstack((aerobicData, anaerobicData, flatData))
-    classes = np.hstack((AEROBIC*np.ones(aerobicData.shape[0]),
-                         ANAEROBIC*np.ones(anaerobicData.shape[0]),
-                         FLAT*np.ones(flatData.shape[0])))
+def get_data_and_classes():
+    data_dir = get_data_dir()
+    aerobic_data = parse_data(os.path.join(data_dir, 'aerobic.txt'))
+    anaerobic_data = parse_data(os.path.join(data_dir, 'anaerobic.txt'))
+    flat_data = flat.generate(aerobic_data.shape[1], num_samples=100)
+
+    data = np.vstack((aerobic_data, anaerobic_data, flat_data))
+    classes = np.hstack((AEROBIC*np.ones(aerobic_data.shape[0]),
+                         ANAEROBIC*np.ones(anaerobic_data.shape[0]),
+                         FLAT*np.ones(flat_data.shape[0])))
     return data, classes
 
 
