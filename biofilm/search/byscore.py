@@ -26,8 +26,12 @@ def maximize(scorer, params):
         full_x = base_full_x.copy()
         full_x[used] = x
 
-        s = spec.spec_from_list(full_x)
+        try:
+            s = spec.spec_from_list(full_x)
+        except spec.ParameterValueError:
+            return 1e3
         print s
+        
         s.save()
         m = runner.run(s)
         result.from_model(m).save()
