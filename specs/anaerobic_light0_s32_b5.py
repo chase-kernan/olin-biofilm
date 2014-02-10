@@ -1,6 +1,6 @@
 
 from biofilm import util
-util.set_h5(utils.results_h5_path('anaerobic_light0_s32_b5'))
+util.set_h5(util.results_h5_path('anaerobic_light0_s32_b5'))
 
 from biofilm.search import byscore
 from biofilm.classify import score
