@@ -17,5 +17,5 @@ params = {
     'light_monod': (0.01, 1)
 }
 print 'aerobic_light_s32_b5'
-result = maximize(scorer, params)
+result = byscore.maximize(scorer, params)
 print result
