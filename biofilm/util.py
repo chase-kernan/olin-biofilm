@@ -21,11 +21,12 @@ def smooth(data, window):
     kernel = np.ones(window, dtype=float)/window
     return np.convolve(signal, kernel, mode='valid')[:len(data)]
 
-def _get_default_h5():
+def results_h5_path(name):
     module_file = inspect.getfile(inspect.currentframe())
     base_path = os.path.dirname(os.path.abspath(module_file))
-    return os.path.join(base_path, os.path.pardir, 'results', 'results.h5')
-DEFAULT_H5_FILE = _get_default_h5()
+    return os.path.join(base_path, os.path.pardir, 'results', name + '.h5')
+
+DEFAULT_H5_FILE = results_h5_path('default')
 
 _h5 = None
 def get_h5():

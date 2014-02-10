@@ -36,7 +36,8 @@ def maximize(scorer, params):
         print score
         return 1.0 - score # invert score to maximize
 
-    return anneal(objective, x0, full_output=True, Tf=1e-8, dwell=10, disp=True,
+    return anneal(objective, x0, full_output=True, Tf=1e-8, dwell=50, 
+                  disp=True, maxeval=6000,
                   lower=[lower for lower, upper in param_list[used]],
                   upper=[upper for lower, upper in param_list[used]])
 
