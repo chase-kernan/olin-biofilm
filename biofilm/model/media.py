@@ -1,18 +1,16 @@
 
 import numpy as np
 import cv2
-
-from scipy.ndimage.filters import laplace
 from scipy.sparse import diags
-from scipy.sparse.linalg import spsolve
+from scipy.sparse.linalg import spsolve, bicg
 
 from biofilm.model import mapping
 
 
 def calculate(model):
-    cells = narrow_cells(model.cells)
-    boundary_layer = make_boundary_layer(cells, model.spec.boundary_layer)
-    media = do_diffusion(cells, boundary, model.spec.media_ratio)
+    cells = narrow_cells(model)
+    boundary = make_boundary_layer(cells, model.spec.boundary_layer)
+    return do_diffusion(cells, boundary, model.spec.media_ratio)
 
 def probability(model):
     """NOTE: this does not return an array of the same size as cells.
@@ -33,8 +31,8 @@ def make_boundary_layer(cells, width):
     cv2.floodFill(boundary_layer, None, fill_source, fill_value)
 
     return boundary_layer == fill_value
-    
-def do_diffusion(cells, boundary, media_ratio):
+
+def make_matrix(cells, boundary, media_ratio):
     n = cells.size
     num_rows, num_cols = cells.shape
     
@@ -43,9 +41,7 @@ def do_diffusion(cells, boundary, media_ratio):
     right = np.ones_like(left)
     up = np.ones(n-num_cols)
     down = np.ones_like(up)
-    
-    rhs = np.zeros_like(center)
-    
+
     # sides
     center[0:num_cols] += 1 # top
     center[num_cols-1::num_cols] += 1 # right
@@ -56,22 +52,26 @@ def do_diffusion(cells, boundary, media_ratio):
     right[num_cols-1::num_cols] = 0
     
     # outside boundary
-    boundary = boundary.flatten()
     center[boundary] = 1
-    rhs[boundary] = 1
     left[boundary[1:]] = 0
     right[boundary[:-1]] = 0
     up[boundary[num_cols:]] = 0
     down[boundary[:-num_cols]] = 0
     
-    M = diags([up, left, center, right, down], 
-              [-num_cols, -1, 0, 1, num_cols], 
-              format='csr')
-    return spsolve(M, rhs).reshape(cells.shape)
+    return diags([up, left, center, right, down], 
+                 [-num_cols, -1, 0, 1, num_cols], 
+                 format='csr')
+
+def do_diffusion(cells, boundary, media_ratio):
+    boundary = boundary.flatten()
+    M = make_matrix(cells, boundary, media_ratio)
+    rhs = np.zeros(cells.size)
+    rhs[boundary] = 1
+    return spsolve(M, rhs, permc_spec='COLAMD').reshape(cells.shape)
 
 def narrow_cells(model):
     height = model.max_height + model.spec.boundary_layer + 2
-    return self.cells[:height, :] > 0
+    return model.cells[:height, :] > 0
 
 def make_circular_kernel(radius):
     return cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2*radius, 2*radius))

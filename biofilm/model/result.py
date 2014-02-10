@@ -2,11 +2,13 @@
 from biofilm import util
 from biofilm.model import spec as sp
 import tables as tb
-import util
 
 def from_model(model):
     return Result(spec_uuid=model.spec.uuid, image=model.render(), 
                   mass=model.mass_history)
+
+def save_model(model):
+    from_model(model).save()
 
 class Result(util.TableObject):
 

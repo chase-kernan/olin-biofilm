@@ -8,10 +8,9 @@ import tables as tb
 from biofilm import util
 import numpy as np
 from itertools import product
-import re
 
 DEFAULT_PARAMETERS = {
-    'stop_on_mass': 4000,
+    'stop_on_mass': 2500,
     'stop_on_time': 50000,
     'stop_on_height': 32,
     'stop_on_no_growth': 2000,
@@ -28,6 +27,15 @@ DEFAULT_PARAMETERS = {
     'media_monod': 0.5,
     'light_monod': 0.5,
 }
+
+INDEX_TO_PARAM = sorted(DEFAULT_PARAMETERS.keys())
+PARAM_TO_INDEX = dict((p, i) for i, p in enumerate(INDEX_TO_PARAM))
+
+def spec_from_list(xs):
+    return Spec(**dict((INDEX_TO_PARAM[i], x) for i, x in enumerate(xs)))
+
+def spec_to_list(s):
+    return [getattr(s, p) for p in INDEX_TO_PARAM]
 
 class Spec(util.TableObject):
 
@@ -52,7 +60,7 @@ class Spec(util.TableObject):
     def verify(self):
         self.is_between("boundary_layer", 0, 32)
         self.is_between("light_penetration", 0, 1024)
-        self.is_between("division_constant", 0.00001, 10.0)
+        self.is_between("division_rate", 1e-5, 1e5)
         self.is_between("initial_cell_spacing", 0, self.width-1)
         self.is_between("media_monod", 1e-5, 1e5)
         self.is_between("media_monod", 1e-5, 1e5)

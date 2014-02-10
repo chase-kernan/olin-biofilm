@@ -1,0 +1,707 @@
+****************************************************************
+*                Begin Solver Diagnostic Results               *
+*                                                              *
+*        ''solver #'' refers to below solver descriptors       *
+*                                                              *
+*        ''iters'' refers to iterations taken                  *
+*                                                              *
+*        ''op complexity'' refers to operator complexity       *
+*                                                              *
+*        ''work per DOA'' refers to work per digit of          *
+*          accuracy to solve the algebraic system, i.e. it     *
+*          measures the overall efficiency of the solver       *
+****************************************************************
+
+
+ solver # | iters | op complexity | work per DOA 
+-------------------------------------------------
+    1     |  err  |      err      |     err      
+    2     |  err  |      err      |     err      
+    3     |  err  |      err      |     err      
+    4     |  err  |      err      |     err      
+    5     |  err  |      err      |     err      
+    6     |  err  |      err      |     err      
+    7     |  err  |      err      |     err      
+    8     |  err  |      err      |     err      
+    9     |  err  |      err      |     err      
+    10    |  err  |      err      |     err      
+    11    |  err  |      err      |     err      
+    12    |  err  |      err      |     err      
+    13    |  err  |      err      |     err      
+    14    |  err  |      err      |     err      
+    15    |  err  |      err      |     err      
+    16    |  err  |      err      |     err      
+    17    |  err  |      err      |     err      
+    18    |  err  |      err      |     err      
+    19    |  err  |      err      |     err      
+    20    |  err  |      err      |     err      
+    21    |  err  |      err      |     err      
+    22    |  err  |      err      |     err      
+    23    |  err  |      err      |     err      
+    24    |  err  |      err      |     err      
+    25    |  err  |      err      |     err      
+    26    |  err  |      err      |     err      
+    27    |  err  |      err      |     err      
+    28    |  err  |      err      |     err      
+    29    |  err  |      err      |     err      
+    30    |  err  |      err      |     err      
+    31    |  err  |      err      |     err      
+    32    |  err  |      err      |     err      
+    33    |  err  |      err      |     err      
+    34    |  err  |      err      |     err      
+    35    |  err  |      err      |     err      
+    36    |  err  |      err      |     err      
+
+****************************************************************
+*                 Begin Solver Descriptors                     
+*       Solver used is smoothed_aggregation_solver( )             
+****************************************************************
+
+Solver Descriptor 1
+  Solve phase arguments:
+    cycle = V
+    krylov accel = gmres
+    tol = 1e-08
+    maxiter = 300
+  Setup phase arguments:
+    max_levels = 15
+    max_coarse = 300
+    coarse_solver = pinv
+    presmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    postsmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    B = ones((A.shape[0],1), dtype=A.dtype); BH = B.copy()
+    strength = ('symmetric', {'theta': 0.0})
+    aggregate = standard
+    smooth = ('energy', {'weighting': 'local', 'krylov': 'gmres', 'degree': 1, 'maxiter': 2})
+    improve_candidates = [('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 4}), None] 
+ 
+Solver Descriptor 2
+  Solve phase arguments:
+    cycle = W
+    krylov accel = gmres
+    tol = 1e-08
+    maxiter = 300
+  Setup phase arguments:
+    max_levels = 15
+    max_coarse = 300
+    coarse_solver = pinv
+    presmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    postsmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    B = ones((A.shape[0],1), dtype=A.dtype); BH = B.copy()
+    strength = ('symmetric', {'theta': 0.0})
+    aggregate = standard
+    smooth = ('energy', {'weighting': 'local', 'krylov': 'gmres', 'degree': 2, 'maxiter': 3})
+    improve_candidates = [('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 4}), None] 
+ 
+Solver Descriptor 3
+  Solve phase arguments:
+    cycle = W
+    krylov accel = gmres
+    tol = 1e-08
+    maxiter = 300
+  Setup phase arguments:
+    max_levels = 15
+    max_coarse = 300
+    coarse_solver = pinv
+    presmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    postsmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    B = ones((A.shape[0],1), dtype=A.dtype); BH = B.copy()
+    strength = ('symmetric', {'theta': 0.0})
+    aggregate = standard
+    smooth = ('energy', {'weighting': 'local', 'krylov': 'gmres', 'degree': 2, 'maxiter': 3})
+    improve_candidates = None 
+ 
+Solver Descriptor 4
+  Solve phase arguments:
+    cycle = W
+    krylov accel = gmres
+    tol = 1e-08
+    maxiter = 300
+  Setup phase arguments:
+    max_levels = 15
+    max_coarse = 300
+    coarse_solver = pinv
+    presmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    postsmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    B = ones((A.shape[0],1), dtype=A.dtype); BH = B.copy()
+    strength = ('symmetric', {'theta': 0.0})
+    aggregate = standard
+    smooth = ('energy', {'weighting': 'local', 'krylov': 'gmres', 'degree': 3, 'maxiter': 4})
+    improve_candidates = [('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 4}), None] 
+ 
+Solver Descriptor 5
+  Solve phase arguments:
+    cycle = W
+    krylov accel = gmres
+    tol = 1e-08
+    maxiter = 300
+  Setup phase arguments:
+    max_levels = 15
+    max_coarse = 300
+    coarse_solver = pinv
+    presmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    postsmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    B = ones((A.shape[0],1), dtype=A.dtype); BH = B.copy()
+    strength = ('symmetric', {'theta': 0.0})
+    aggregate = standard
+    smooth = ('energy', {'weighting': 'local', 'krylov': 'gmres', 'degree': 3, 'maxiter': 4})
+    improve_candidates = None 
+ 
+Solver Descriptor 6
+  Solve phase arguments:
+    cycle = W
+    krylov accel = gmres
+    tol = 1e-08
+    maxiter = 300
+  Setup phase arguments:
+    max_levels = 15
+    max_coarse = 300
+    coarse_solver = pinv
+    presmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    postsmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    B = ones((A.shape[0],1), dtype=A.dtype); BH = B.copy()
+    strength = ('evolution', {'epsilon': 2.0, 'k': 2, 'proj_type': 'l2'})
+    aggregate = standard
+    smooth = ('energy', {'weighting': 'local', 'krylov': 'gmres', 'degree': 1, 'maxiter': 2})
+    improve_candidates = [('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 4}), None] 
+ 
+Solver Descriptor 7
+  Solve phase arguments:
+    cycle = W
+    krylov accel = gmres
+    tol = 1e-08
+    maxiter = 300
+  Setup phase arguments:
+    max_levels = 15
+    max_coarse = 300
+    coarse_solver = pinv
+    presmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    postsmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    B = ones((A.shape[0],1), dtype=A.dtype); BH = B.copy()
+    strength = ('evolution', {'epsilon': 2.0, 'k': 2, 'proj_type': 'l2'})
+    aggregate = standard
+    smooth = ('energy', {'weighting': 'local', 'krylov': 'gmres', 'degree': 1, 'maxiter': 2})
+    improve_candidates = None 
+ 
+Solver Descriptor 8
+  Solve phase arguments:
+    cycle = W
+    krylov accel = gmres
+    tol = 1e-08
+    maxiter = 300
+  Setup phase arguments:
+    max_levels = 15
+    max_coarse = 300
+    coarse_solver = pinv
+    presmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    postsmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    B = ones((A.shape[0],1), dtype=A.dtype); BH = B.copy()
+    strength = ('symmetric', {'theta': 0.0})
+    aggregate = standard
+    smooth = ('energy', {'weighting': 'local', 'krylov': 'gmres', 'degree': 1, 'maxiter': 2})
+    improve_candidates = None 
+ 
+Solver Descriptor 9
+  Solve phase arguments:
+    cycle = W
+    krylov accel = gmres
+    tol = 1e-08
+    maxiter = 300
+  Setup phase arguments:
+    max_levels = 15
+    max_coarse = 300
+    coarse_solver = pinv
+    presmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    postsmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    B = ones((A.shape[0],1), dtype=A.dtype); BH = B.copy()
+    strength = ('evolution', {'epsilon': 2.0, 'k': 2, 'proj_type': 'l2'})
+    aggregate = standard
+    smooth = ('energy', {'weighting': 'local', 'krylov': 'gmres', 'degree': 2, 'maxiter': 3})
+    improve_candidates = [('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 4}), None] 
+ 
+Solver Descriptor 10
+  Solve phase arguments:
+    cycle = W
+    krylov accel = gmres
+    tol = 1e-08
+    maxiter = 300
+  Setup phase arguments:
+    max_levels = 15
+    max_coarse = 300
+    coarse_solver = pinv
+    presmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    postsmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    B = ones((A.shape[0],1), dtype=A.dtype); BH = B.copy()
+    strength = ('evolution', {'epsilon': 2.0, 'k': 2, 'proj_type': 'l2'})
+    aggregate = standard
+    smooth = ('energy', {'weighting': 'local', 'krylov': 'gmres', 'degree': 3, 'maxiter': 4})
+    improve_candidates = [('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 4}), None] 
+ 
+Solver Descriptor 11
+  Solve phase arguments:
+    cycle = W
+    krylov accel = gmres
+    tol = 1e-08
+    maxiter = 300
+  Setup phase arguments:
+    max_levels = 15
+    max_coarse = 300
+    coarse_solver = pinv
+    presmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    postsmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    B = ones((A.shape[0],1), dtype=A.dtype); BH = B.copy()
+    strength = ('evolution', {'epsilon': 2.0, 'k': 2, 'proj_type': 'l2'})
+    aggregate = standard
+    smooth = ('energy', {'weighting': 'local', 'krylov': 'gmres', 'degree': 3, 'maxiter': 4})
+    improve_candidates = None 
+ 
+Solver Descriptor 12
+  Solve phase arguments:
+    cycle = W
+    krylov accel = gmres
+    tol = 1e-08
+    maxiter = 300
+  Setup phase arguments:
+    max_levels = 15
+    max_coarse = 300
+    coarse_solver = pinv
+    presmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    postsmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    B = ones((A.shape[0],1), dtype=A.dtype); BH = B.copy()
+    strength = ('evolution', {'epsilon': 4.0, 'k': 2, 'proj_type': 'l2'})
+    aggregate = standard
+    smooth = ('energy', {'weighting': 'local', 'krylov': 'gmres', 'degree': 1, 'maxiter': 2})
+    improve_candidates = [('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 4}), None] 
+ 
+Solver Descriptor 13
+  Solve phase arguments:
+    cycle = W
+    krylov accel = gmres
+    tol = 1e-08
+    maxiter = 300
+  Setup phase arguments:
+    max_levels = 15
+    max_coarse = 300
+    coarse_solver = pinv
+    presmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    postsmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    B = ones((A.shape[0],1), dtype=A.dtype); BH = B.copy()
+    strength = ('evolution', {'epsilon': 4.0, 'k': 2, 'proj_type': 'l2'})
+    aggregate = standard
+    smooth = ('energy', {'weighting': 'local', 'krylov': 'gmres', 'degree': 1, 'maxiter': 2})
+    improve_candidates = None 
+ 
+Solver Descriptor 14
+  Solve phase arguments:
+    cycle = W
+    krylov accel = gmres
+    tol = 1e-08
+    maxiter = 300
+  Setup phase arguments:
+    max_levels = 15
+    max_coarse = 300
+    coarse_solver = pinv
+    presmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    postsmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    B = ones((A.shape[0],1), dtype=A.dtype); BH = B.copy()
+    strength = ('evolution', {'epsilon': 4.0, 'k': 2, 'proj_type': 'l2'})
+    aggregate = standard
+    smooth = ('energy', {'weighting': 'local', 'krylov': 'gmres', 'degree': 2, 'maxiter': 3})
+    improve_candidates = [('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 4}), None] 
+ 
+Solver Descriptor 15
+  Solve phase arguments:
+    cycle = W
+    krylov accel = gmres
+    tol = 1e-08
+    maxiter = 300
+  Setup phase arguments:
+    max_levels = 15
+    max_coarse = 300
+    coarse_solver = pinv
+    presmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    postsmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    B = ones((A.shape[0],1), dtype=A.dtype); BH = B.copy()
+    strength = ('evolution', {'epsilon': 4.0, 'k': 2, 'proj_type': 'l2'})
+    aggregate = standard
+    smooth = ('energy', {'weighting': 'local', 'krylov': 'gmres', 'degree': 2, 'maxiter': 3})
+    improve_candidates = None 
+ 
+Solver Descriptor 16
+  Solve phase arguments:
+    cycle = W
+    krylov accel = gmres
+    tol = 1e-08
+    maxiter = 300
+  Setup phase arguments:
+    max_levels = 15
+    max_coarse = 300
+    coarse_solver = pinv
+    presmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    postsmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    B = ones((A.shape[0],1), dtype=A.dtype); BH = B.copy()
+    strength = ('evolution', {'epsilon': 2.0, 'k': 2, 'proj_type': 'l2'})
+    aggregate = standard
+    smooth = ('energy', {'weighting': 'local', 'krylov': 'gmres', 'degree': 2, 'maxiter': 3})
+    improve_candidates = None 
+ 
+Solver Descriptor 17
+  Solve phase arguments:
+    cycle = W
+    krylov accel = gmres
+    tol = 1e-08
+    maxiter = 300
+  Setup phase arguments:
+    max_levels = 15
+    max_coarse = 300
+    coarse_solver = pinv
+    presmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    postsmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    B = ones((A.shape[0],1), dtype=A.dtype); BH = B.copy()
+    strength = ('symmetric', {'theta': 0.0})
+    aggregate = standard
+    smooth = ('energy', {'weighting': 'local', 'krylov': 'gmres', 'degree': 1, 'maxiter': 2})
+    improve_candidates = [('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 4}), None] 
+ 
+Solver Descriptor 18
+  Solve phase arguments:
+    cycle = V
+    krylov accel = gmres
+    tol = 1e-08
+    maxiter = 300
+  Setup phase arguments:
+    max_levels = 15
+    max_coarse = 300
+    coarse_solver = pinv
+    presmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    postsmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    B = ones((A.shape[0],1), dtype=A.dtype); BH = B.copy()
+    strength = ('evolution', {'epsilon': 4.0, 'k': 2, 'proj_type': 'l2'})
+    aggregate = standard
+    smooth = ('energy', {'weighting': 'local', 'krylov': 'gmres', 'degree': 3, 'maxiter': 4})
+    improve_candidates = None 
+ 
+Solver Descriptor 19
+  Solve phase arguments:
+    cycle = V
+    krylov accel = gmres
+    tol = 1e-08
+    maxiter = 300
+  Setup phase arguments:
+    max_levels = 15
+    max_coarse = 300
+    coarse_solver = pinv
+    presmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    postsmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    B = ones((A.shape[0],1), dtype=A.dtype); BH = B.copy()
+    strength = ('evolution', {'epsilon': 4.0, 'k': 2, 'proj_type': 'l2'})
+    aggregate = standard
+    smooth = ('energy', {'weighting': 'local', 'krylov': 'gmres', 'degree': 3, 'maxiter': 4})
+    improve_candidates = [('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 4}), None] 
+ 
+Solver Descriptor 20
+  Solve phase arguments:
+    cycle = V
+    krylov accel = gmres
+    tol = 1e-08
+    maxiter = 300
+  Setup phase arguments:
+    max_levels = 15
+    max_coarse = 300
+    coarse_solver = pinv
+    presmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    postsmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    B = ones((A.shape[0],1), dtype=A.dtype); BH = B.copy()
+    strength = ('symmetric', {'theta': 0.0})
+    aggregate = standard
+    smooth = ('energy', {'weighting': 'local', 'krylov': 'gmres', 'degree': 1, 'maxiter': 2})
+    improve_candidates = None 
+ 
+Solver Descriptor 21
+  Solve phase arguments:
+    cycle = V
+    krylov accel = gmres
+    tol = 1e-08
+    maxiter = 300
+  Setup phase arguments:
+    max_levels = 15
+    max_coarse = 300
+    coarse_solver = pinv
+    presmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    postsmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    B = ones((A.shape[0],1), dtype=A.dtype); BH = B.copy()
+    strength = ('symmetric', {'theta': 0.0})
+    aggregate = standard
+    smooth = ('energy', {'weighting': 'local', 'krylov': 'gmres', 'degree': 2, 'maxiter': 3})
+    improve_candidates = [('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 4}), None] 
+ 
+Solver Descriptor 22
+  Solve phase arguments:
+    cycle = V
+    krylov accel = gmres
+    tol = 1e-08
+    maxiter = 300
+  Setup phase arguments:
+    max_levels = 15
+    max_coarse = 300
+    coarse_solver = pinv
+    presmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    postsmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    B = ones((A.shape[0],1), dtype=A.dtype); BH = B.copy()
+    strength = ('symmetric', {'theta': 0.0})
+    aggregate = standard
+    smooth = ('energy', {'weighting': 'local', 'krylov': 'gmres', 'degree': 2, 'maxiter': 3})
+    improve_candidates = None 
+ 
+Solver Descriptor 23
+  Solve phase arguments:
+    cycle = V
+    krylov accel = gmres
+    tol = 1e-08
+    maxiter = 300
+  Setup phase arguments:
+    max_levels = 15
+    max_coarse = 300
+    coarse_solver = pinv
+    presmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    postsmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    B = ones((A.shape[0],1), dtype=A.dtype); BH = B.copy()
+    strength = ('symmetric', {'theta': 0.0})
+    aggregate = standard
+    smooth = ('energy', {'weighting': 'local', 'krylov': 'gmres', 'degree': 3, 'maxiter': 4})
+    improve_candidates = [('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 4}), None] 
+ 
+Solver Descriptor 24
+  Solve phase arguments:
+    cycle = V
+    krylov accel = gmres
+    tol = 1e-08
+    maxiter = 300
+  Setup phase arguments:
+    max_levels = 15
+    max_coarse = 300
+    coarse_solver = pinv
+    presmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    postsmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    B = ones((A.shape[0],1), dtype=A.dtype); BH = B.copy()
+    strength = ('symmetric', {'theta': 0.0})
+    aggregate = standard
+    smooth = ('energy', {'weighting': 'local', 'krylov': 'gmres', 'degree': 3, 'maxiter': 4})
+    improve_candidates = None 
+ 
+Solver Descriptor 25
+  Solve phase arguments:
+    cycle = V
+    krylov accel = gmres
+    tol = 1e-08
+    maxiter = 300
+  Setup phase arguments:
+    max_levels = 15
+    max_coarse = 300
+    coarse_solver = pinv
+    presmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    postsmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    B = ones((A.shape[0],1), dtype=A.dtype); BH = B.copy()
+    strength = ('evolution', {'epsilon': 2.0, 'k': 2, 'proj_type': 'l2'})
+    aggregate = standard
+    smooth = ('energy', {'weighting': 'local', 'krylov': 'gmres', 'degree': 1, 'maxiter': 2})
+    improve_candidates = [('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 4}), None] 
+ 
+Solver Descriptor 26
+  Solve phase arguments:
+    cycle = V
+    krylov accel = gmres
+    tol = 1e-08
+    maxiter = 300
+  Setup phase arguments:
+    max_levels = 15
+    max_coarse = 300
+    coarse_solver = pinv
+    presmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    postsmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    B = ones((A.shape[0],1), dtype=A.dtype); BH = B.copy()
+    strength = ('evolution', {'epsilon': 2.0, 'k': 2, 'proj_type': 'l2'})
+    aggregate = standard
+    smooth = ('energy', {'weighting': 'local', 'krylov': 'gmres', 'degree': 1, 'maxiter': 2})
+    improve_candidates = None 
+ 
+Solver Descriptor 27
+  Solve phase arguments:
+    cycle = V
+    krylov accel = gmres
+    tol = 1e-08
+    maxiter = 300
+  Setup phase arguments:
+    max_levels = 15
+    max_coarse = 300
+    coarse_solver = pinv
+    presmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    postsmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    B = ones((A.shape[0],1), dtype=A.dtype); BH = B.copy()
+    strength = ('evolution', {'epsilon': 2.0, 'k': 2, 'proj_type': 'l2'})
+    aggregate = standard
+    smooth = ('energy', {'weighting': 'local', 'krylov': 'gmres', 'degree': 2, 'maxiter': 3})
+    improve_candidates = [('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 4}), None] 
+ 
+Solver Descriptor 28
+  Solve phase arguments:
+    cycle = V
+    krylov accel = gmres
+    tol = 1e-08
+    maxiter = 300
+  Setup phase arguments:
+    max_levels = 15
+    max_coarse = 300
+    coarse_solver = pinv
+    presmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    postsmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    B = ones((A.shape[0],1), dtype=A.dtype); BH = B.copy()
+    strength = ('evolution', {'epsilon': 2.0, 'k': 2, 'proj_type': 'l2'})
+    aggregate = standard
+    smooth = ('energy', {'weighting': 'local', 'krylov': 'gmres', 'degree': 2, 'maxiter': 3})
+    improve_candidates = None 
+ 
+Solver Descriptor 29
+  Solve phase arguments:
+    cycle = V
+    krylov accel = gmres
+    tol = 1e-08
+    maxiter = 300
+  Setup phase arguments:
+    max_levels = 15
+    max_coarse = 300
+    coarse_solver = pinv
+    presmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    postsmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    B = ones((A.shape[0],1), dtype=A.dtype); BH = B.copy()
+    strength = ('evolution', {'epsilon': 2.0, 'k': 2, 'proj_type': 'l2'})
+    aggregate = standard
+    smooth = ('energy', {'weighting': 'local', 'krylov': 'gmres', 'degree': 3, 'maxiter': 4})
+    improve_candidates = [('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 4}), None] 
+ 
+Solver Descriptor 30
+  Solve phase arguments:
+    cycle = V
+    krylov accel = gmres
+    tol = 1e-08
+    maxiter = 300
+  Setup phase arguments:
+    max_levels = 15
+    max_coarse = 300
+    coarse_solver = pinv
+    presmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    postsmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    B = ones((A.shape[0],1), dtype=A.dtype); BH = B.copy()
+    strength = ('evolution', {'epsilon': 2.0, 'k': 2, 'proj_type': 'l2'})
+    aggregate = standard
+    smooth = ('energy', {'weighting': 'local', 'krylov': 'gmres', 'degree': 3, 'maxiter': 4})
+    improve_candidates = None 
+ 
+Solver Descriptor 31
+  Solve phase arguments:
+    cycle = V
+    krylov accel = gmres
+    tol = 1e-08
+    maxiter = 300
+  Setup phase arguments:
+    max_levels = 15
+    max_coarse = 300
+    coarse_solver = pinv
+    presmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    postsmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    B = ones((A.shape[0],1), dtype=A.dtype); BH = B.copy()
+    strength = ('evolution', {'epsilon': 4.0, 'k': 2, 'proj_type': 'l2'})
+    aggregate = standard
+    smooth = ('energy', {'weighting': 'local', 'krylov': 'gmres', 'degree': 1, 'maxiter': 2})
+    improve_candidates = [('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 4}), None] 
+ 
+Solver Descriptor 32
+  Solve phase arguments:
+    cycle = V
+    krylov accel = gmres
+    tol = 1e-08
+    maxiter = 300
+  Setup phase arguments:
+    max_levels = 15
+    max_coarse = 300
+    coarse_solver = pinv
+    presmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    postsmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    B = ones((A.shape[0],1), dtype=A.dtype); BH = B.copy()
+    strength = ('evolution', {'epsilon': 4.0, 'k': 2, 'proj_type': 'l2'})
+    aggregate = standard
+    smooth = ('energy', {'weighting': 'local', 'krylov': 'gmres', 'degree': 1, 'maxiter': 2})
+    improve_candidates = None 
+ 
+Solver Descriptor 33
+  Solve phase arguments:
+    cycle = V
+    krylov accel = gmres
+    tol = 1e-08
+    maxiter = 300
+  Setup phase arguments:
+    max_levels = 15
+    max_coarse = 300
+    coarse_solver = pinv
+    presmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    postsmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    B = ones((A.shape[0],1), dtype=A.dtype); BH = B.copy()
+    strength = ('evolution', {'epsilon': 4.0, 'k': 2, 'proj_type': 'l2'})
+    aggregate = standard
+    smooth = ('energy', {'weighting': 'local', 'krylov': 'gmres', 'degree': 2, 'maxiter': 3})
+    improve_candidates = [('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 4}), None] 
+ 
+Solver Descriptor 34
+  Solve phase arguments:
+    cycle = V
+    krylov accel = gmres
+    tol = 1e-08
+    maxiter = 300
+  Setup phase arguments:
+    max_levels = 15
+    max_coarse = 300
+    coarse_solver = pinv
+    presmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    postsmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    B = ones((A.shape[0],1), dtype=A.dtype); BH = B.copy()
+    strength = ('evolution', {'epsilon': 4.0, 'k': 2, 'proj_type': 'l2'})
+    aggregate = standard
+    smooth = ('energy', {'weighting': 'local', 'krylov': 'gmres', 'degree': 2, 'maxiter': 3})
+    improve_candidates = None 
+ 
+Solver Descriptor 35
+  Solve phase arguments:
+    cycle = W
+    krylov accel = gmres
+    tol = 1e-08
+    maxiter = 300
+  Setup phase arguments:
+    max_levels = 15
+    max_coarse = 300
+    coarse_solver = pinv
+    presmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    postsmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    B = ones((A.shape[0],1), dtype=A.dtype); BH = B.copy()
+    strength = ('evolution', {'epsilon': 4.0, 'k': 2, 'proj_type': 'l2'})
+    aggregate = standard
+    smooth = ('energy', {'weighting': 'local', 'krylov': 'gmres', 'degree': 3, 'maxiter': 4})
+    improve_candidates = [('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 4}), None] 
+ 
+Solver Descriptor 36
+  Solve phase arguments:
+    cycle = W
+    krylov accel = gmres
+    tol = 1e-08
+    maxiter = 300
+  Setup phase arguments:
+    max_levels = 15
+    max_coarse = 300
+    coarse_solver = pinv
+    presmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    postsmoother = ('gauss_seidel_nr', {'sweep': 'symmetric', 'iterations': 2})
+    B = ones((A.shape[0],1), dtype=A.dtype); BH = B.copy()
+    strength = ('evolution', {'epsilon': 4.0, 'k': 2, 'proj_type': 'l2'})
+    aggregate = standard
+    smooth = ('energy', {'weighting': 'local', 'krylov': 'gmres', 'degree': 3, 'maxiter': 4})
+    improve_candidates = None 
+ 

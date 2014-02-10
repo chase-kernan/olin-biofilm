@@ -6,6 +6,7 @@ Created on Dec 29, 2012
 
 import numpy as np
 import cv2
+import re
 import random as rdm
 
 from biofilm.model.media import probability as media_probability
@@ -31,7 +32,7 @@ class Model(object):
         self.reset()
         self._place_cells_regularly()
 
-        should_stop = make_stopping_function(spec)
+        should_stop = make_stopping_function(self.spec)
         while not should_stop(self):
             self.mass_history[self.time] = self.mass
             self.step()
@@ -136,10 +137,9 @@ class Model(object):
         rows, columns = self.dividing.nonzero()
         for i in range(len(rows)):
             row = rows[i]
-            col = columns[i]
+            column = columns[i]
 
             write_block(self._cell_block, self.cells, row, column, block_size)
-            write_block(self._light_block, self.light, row, column, block_size)
             cv2.filter2D(self._cell_block, cv2.cv.CV_32F, self._tension_kernel,
                          self._probability, borderType=cv2.BORDER_CONSTANT)
             cv2.threshold(self._probability, self._tension_min, 0, 
@@ -219,3 +219,8 @@ def write_block(block, matrix, row, column, block_size, filler=0):
     block.fill(filler)
     block[x-(row-top) : x+(bottom-row),
           x-(column-left) : x+(right-column)] = matrix[top:bottom, left:right]
+
+if __name__ == '__main__':
+    from biofilm.model import spec
+    from matplotlib import pyplot as plt
+    run(spec.Spec())
