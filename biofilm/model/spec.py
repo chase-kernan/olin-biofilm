@@ -54,7 +54,7 @@ class Spec(util.TableObject):
         value = getattr(self, name)
         if value < min_value or value > max_value:
             raise ParameterValueError(name, value, 
-                                      "Must be in the range {1} to {2}."\
+                                      "Must be in the range {0} to {1}."\
                                       .format(min_value, max_value))
 
     def verify(self):
