@@ -20,6 +20,6 @@ builder.build()
 
 for i, spec in enumerate(Spec.all()):
     print i, 'of', total
-    result.from_model(runner.run(s)).save()
+    result.from_model(runner.run(spec)).save()
 
 print 'done!'
