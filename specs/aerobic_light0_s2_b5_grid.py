@@ -7,7 +7,7 @@ from biofilm.model import runner, result
 import numpy as np
 
 builder = SpecBuilder()
-builder.add('target_mass', 5000)
+builder.add('stop_on_mass', 5000)
 builder.add('boundary_layer', 5)
 builder.add('light_penetration', 0)
 builder.add('tension_power', 2)
