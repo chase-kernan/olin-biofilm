@@ -1,6 +1,6 @@
 
 from biofilm import util
-util.set_h5(util.results_h5_path('light_s2_b5_grid'))
+util.set_h5(util.results_h5_path('light_s32_b5_grid'))
 
 from biofilm.model.spec import Spec, SpecBuilder
 from biofilm.model import runner, result
