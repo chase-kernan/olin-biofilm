@@ -9,7 +9,7 @@ import numpy as np
 builder = SpecBuilder()
 builder.add('stop_on_mass', 5000)
 builder.add('boundary_layer', 5)
-builder.add('light_penetration', 1, 2, 4, 8, 16)
+builder.add('light_penetration', 4, 6, 8, 10, 12)
 builder.add('tension_power', 2)
 builder.add('initial_cell_spacing', 2)
 builder.add('media_ratio', *np.linspace(0.1, 5.0, 10))
