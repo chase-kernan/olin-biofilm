@@ -20,7 +20,7 @@ class Scorer(object):
         self._class_index = train.CLASSES[self.target_class]
 
     def score(self, biofilm_image):
-        mass_diff = float(abs(biofilm_image.sum() - self.target_mass))
+        mass_diff = float(min(0, self.target_mass - biofilm_image.sum()))
         if mass_diff/self.target_mass > self.mass_tolerance:
             return MASS_WEIGHT*(1. - mass_diff/self.target_mass)
 

@@ -20,7 +20,7 @@ class Result(util.TableObject):
 
     @property
     @util.memoized
-    def spec(self): return specs.Spec.get(self.spec_uuid)
+    def spec(self): return sp.Spec.get(self.spec_uuid)
 
     @property
     @util.memoized
