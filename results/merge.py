@@ -2,11 +2,11 @@
 import tables
 
 def merge(base_file, files_to_merge):
-    with tables.open_file(files_to_merge[0], 'r') as first:
-        first.copy_file(base_file, overwrite=True)
+    #with tables.open_file(files_to_merge[0], 'r') as first:
+    #    first.copy_file(base_file, overwrite=True)
 
-    with tables.open_file(base_file, 'a') as base:
-        for path in files_to_merge[1:]:
+    with tables.open_file(base_file, 'w') as base:
+        for path in files_to_merge:
             print path
             with tables.open_file(path, 'r') as source:
                 for table in source.walk_nodes(classname='Table'):
@@ -23,7 +23,9 @@ def copy_table_into(table, base):
         base.create_group(parent.parentnode._v_pathname, 
                           parent._v_name, 
                           createparents=True)
-    table._f_copy(base.get_node(parent._v_pathname))
+    table._f_copy(base.get_node(parent._v_pathname),
+                  filters=tables.Filters(complib='blosc', complevel=1),
+                  chunkshape=(1,))
 
 def merge_table_into(table, base_table):
     print 'merging', table, 'into', base_table

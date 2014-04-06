@@ -28,7 +28,7 @@ class Result(util.TableObject):
 
     def _on_get(self, row):
         self.image = _get_image(self.uuid, self.spec.shape)
-        self.mass = _get_mass(self.uuid, self.spec.stop_on_time)
+        #self.mass = _get_mass(self.uuid, self.spec.stop_on_time)
 
     def _fill_row(self, row):
         util.TableObject._fill_row(self, row)
@@ -48,32 +48,7 @@ Result.setup_table("results", ResultTable,
 
 _get_image, _save_image, _delete_image \
         = util.make_variable_data("_results_image", tb.BoolCol,
-                                   filters=tb.Filters(complib='zlib', 
-                                                      complevel=9))
+                                  chunkshape=(1,))
 _get_mass, _save_mass, _delete_mass \
         = util.make_variable_data("_results_mass", tb.UInt16Col,
-                                   filters=tb.Filters(complib='zlib', 
-                                                      complevel=9))
-@util.memoized
-def _get_image_table(size):
-    class Image(util.EasyTableObject): pass
-    class ImageTable(tb.IsDescription):
-        uuid = util.make_uuid_col()
-        image = tb.BoolCol(shape=size)
-
-    name = "_result_images_{0}x{1}".format(*size)
-    Image.setup_table(name, ImageTable,
-                      filters=tb.Filters(complib='zlib', complevel=9))
-    return Image
-
-@util.memoized
-def _get_mass_table(length):
-    class Mass(util.EasyTableObject): pass
-    class MassTable(tb.IsDescription):
-        uuid = util.make_uuid_col()
-        mass = tb.UInt16Col(shape=(1, length))
-
-    name = "_result_mass_{0}".format(length)
-    Mass.setup_table(name, MassTable,
-                     filters=tb.Filters(complib='zlib', complevel=9))
-    return Mass
+                                  chunkshape=(1,))

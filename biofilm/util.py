@@ -11,6 +11,7 @@ import collections
 import functools
 import inspect
 import os
+import random
 
 
 def derivative(x, y):
@@ -38,7 +39,7 @@ def get_h5():
 
 def set_h5(h5_file):
     global _h5
-    if isinstance(h5_file, str): 
+    if isinstance(h5_file, (str, unicode)): 
         h5_file = tb.openFile(h5_file, "a")
     if isinstance(h5_file, H5Context):
         _h5 = h5_file
@@ -95,6 +96,11 @@ class H5Context(object):
         """Flushes the entire hdf5 connection.
         """
         self.hdf5.flush()
+
+    def close(self):
+        self.root = None
+        self.hdf5.close()
+        self.hdf5 = None
         
 class QuickTable(object):
     
@@ -142,6 +148,9 @@ class QuickTable(object):
                 print "Finished {0} of {1}".format(count, total)
         if display_progress:
             print "Done!"
+
+    def read_index(self, index):
+        return next(self.raw.itersequence([index]))
     
     def read_single(self, query):
         rows = self.raw.where(query)
@@ -173,9 +182,16 @@ class TableObject(object):
         return obj
 
     @classmethod
-    def all(cls):
-        for row in cls.table.iter_rows():
-            yield cls._from_row(row)
+    def all(cls, random_order=False):
+        if random_order:
+            # ensure no repeats
+            indices = range(cls.table.raw.nrows)
+            random.shuffle(indices)
+            for index in indices:
+                yield cls._from_row(cls.table.read_index(index))
+        else:
+            for row in cls.table.iter_rows():
+                yield cls._from_row(row)
 
     @classmethod
     def reset(cls):
@@ -188,6 +204,11 @@ class TableObject(object):
             yield cls._from_row(row)
 
     @classmethod
+    def find_single(cls, query):
+        row = cls.table.read_single(query)
+        return cls._from_row(row) if row else None
+
+    @classmethod
     def setup_table(cls, node, description, 
                     filters=tb.Filters(complib='blosc', complevel=1),
                     sorted_indices=['uuid'],
@@ -198,6 +219,10 @@ class TableObject(object):
     @classmethod
     def flush(cls):
         cls.table.flush()
+
+    @classmethod
+    def __len__(cls):
+        return len(cls.table.raw)
 
     @classmethod
     def _lookup_by_uuid(cls, uuid):

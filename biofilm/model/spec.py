@@ -11,21 +11,21 @@ from itertools import product
 
 DEFAULT_PARAMETERS = {
     'stop_on_mass': 2500,
-    'stop_on_time': 50000,
+    'stop_on_time': 1000,
     'stop_on_height': 32,
-    'stop_on_no_growth': 2000,
+    'stop_on_no_growth': 50,
     'width': 256,
     'height': 32,
     'block_size': 11,
     'boundary_layer': 5,
-    'light_penetration': 16,
+    'light_penetration': 0,
     'distance_power': 2.0,
     'tension_power': 2.5,
     'initial_cell_spacing': 2,
     'division_rate': 1.0,
     'media_ratio': 0.2,
     'media_monod': 0.5,
-    'light_monod': 0.5,
+    'light_monod': 1.0,
 }
 
 INDEX_TO_PARAM = sorted(DEFAULT_PARAMETERS.keys())

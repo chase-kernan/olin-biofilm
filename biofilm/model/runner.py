@@ -13,8 +13,8 @@ from biofilm.model.media import probability as media_probability
 from biofilm.model.light import probability as light_probability
 
 
-def run(spec):
-    return Model(spec).run()
+def run(spec, **run_kwargs):
+    return Model(spec).run(**run_kwargs)
 
 ALIVE = 1
 DEAD = 0
@@ -28,15 +28,17 @@ class Model(object):
         self.last_growth = 0
         self.time = 0
     
-    def run(self):
+    def run(self, on_step=None):
         self.reset()
         self._place_cells_regularly()
+        self.__max_height = 1
 
         should_stop = make_stopping_function(self.spec)
         while not should_stop(self):
             self.mass_history[self.time] = self.mass
             self.step()
             self.time += 1
+            if on_step and on_step(self): break
 
         return self
     
@@ -52,7 +54,7 @@ class Model(object):
         self.__max_row = self.num_cells[0]-1
         self.__max_column = self.num_cells[1]-1
         self.__mass = 0
-        self.__max_height = 0
+        self.__max_height = 1
 
         self._distance_kernel = generate_distance_kernel(self.spec.block_size)
         self._distance_kernel **= self.spec.distance_power
@@ -121,13 +123,13 @@ class Model(object):
         prob = self.spec.division_rate*light_probability(self)
 
         media_prob = media_probability(self)
-        prob[:media_prob.shape[0], :] *= media_prob
+        prob *= media_prob[:prob.shape[0], :]
 
-        prob[np.logical_not(self.cells)] = 0
+        prob[np.logical_not(self.cells[:prob.shape[0], :])] = 0
         self.division_probability = prob
 
     def _calculate_dividing_cells(self):
-        self.dividing = np.random.ranf(self.num_cells) <= \
+        self.dividing = np.random.ranf(self.division_probability.shape) <= \
                         self.division_probability
 
     def _divide(self):        
