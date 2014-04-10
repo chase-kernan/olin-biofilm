@@ -2,6 +2,7 @@
 from biofilm import util
 from biofilm.model import spec as sp
 import tables as tb
+import numpy as np
 
 def from_model(model):
     return Result(spec_uuid=model.spec.uuid, image=model.render(), 

@@ -4,9 +4,10 @@ from biofilm.model import mapping
 
 def calculate(model):
     if model.spec.light_penetration > 0:
-        model.light = np.cumsum(model.cells[:model.max_height+1, :], axis=0)
-        model.light /= -float(model.spec.light_penetration) # otherwise uint16
-        np.exp(model.light, out=model.light)
+        light = np.cumsum(model.cells[:model.max_height+1, :], 
+                          axis=0, dtype=float)
+        light /= -float(model.spec.light_penetration) # otherwise uint16
+        model.light = np.exp(light)
     else:
         model.light = np.ones((model.max_height, model.cells.shape[1]))
     return model.light

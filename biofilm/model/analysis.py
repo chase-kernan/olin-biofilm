@@ -15,6 +15,8 @@ from matplotlib import pyplot as plt
 from itertools import chain
 from itertools import groupby
 
+plt.set_cmap('hot') # ugh, rainbow cmaps...
+
 class Field(object):
 
     def __init__(self, func=None, path='', column=tb.Float32Col(), 
@@ -93,6 +95,17 @@ class Field(object):
     def delete_by_spec(self, spec):
         self._by_spec(uuid=spec.uuid).delete()
 
+    def compute_specs(self, query=None, print_interval=100, **compute_kwargs):
+        if query is None:
+            print sp.Spec.table.raw.nrows
+            specs = sp.Spec.all()
+        else:
+            specs = sp.Spec.where(query)
+        for i, spec in enumerate(specs):
+            if print_interval and i % print_interval == 0:
+                print i,
+            self.compute_by_spec(spec, **compute_kwargs)
+
     def _summarize(self, data):
         if data.size > 0:
             return dict(mean=data.mean(), median=np.median(data),
@@ -100,6 +113,23 @@ class Field(object):
         else:
             print "WARNING: Empty data!"
             return dict(mean=0.0, median=0.0, std=0.0, max=0.0, min=0.0)
+
+    def plot(self, parameter, spec_query=None, statistic='mean', show=False, 
+             **plot_args):
+        specs = self._query_specs(spec_query)
+        
+        shape = len(specs), 1
+        xs = np.empty(shape, float)
+        ys = np.empty(shape, float)
+        
+        for i, spec in enumerate(specs):
+            xs[i] = float(getattr(spec, parameter))
+            ys[i] = self._get_statistic(spec, statistic)
+
+        plt.plot(xs, ys, 'rx', **plot_args)
+        plt.xlabel(parameter)
+        plt.ylabel(self.path)
+        if show: plt.show()
 
     def phase_diagram_2d(self, parameter1, parameter2, num_cells=50, 
                          spec_query=None, statistic='mean', show=False, 
@@ -118,15 +148,13 @@ class Field(object):
         
         xMin, xMax = xs.min(), xs.max()
         yMin, yMax = ys.min(), ys.max()
-
-        print xMin, xMax, yMin, yMax
         
         assert xMin != xMax
         assert yMin != yMax
 
         try:
             num_x, num_y = num_cells
-        except:
+        except TypeError:
             num_x, num_y = num_cells, num_cells
         
         grid = np.mgrid[xMin:xMax:num_x*1j, 
@@ -226,7 +254,6 @@ class Field(object):
     def _get_statistic(self, spec, statistic):
         return self.get_by_spec(spec)[statistic]
 
-
 class VariableField(Field):
 
     def __init__(self, shape=lambda r: 1, **field_args):
@@ -311,8 +338,10 @@ class CurveAveragingField(VariableField):
         plt.ylabel(self.path)
         if show: plt.show()
 
+# TODO: convert Field into a function @descriptor
+
 def _compute_mass(result):
-    return result.mass.max()
+    return result.image.sum()
 mass = Field(func=_compute_mass, path="mass", column=tb.UInt32Col())
 
 
@@ -408,7 +437,18 @@ def _compute_perimeter(result):
     return sum(cv2.arcLength(c, True) for c in 
                _compute_contours(result.int_image))\
            /float(result.spec.width)
+
 perimeter = Field(func=_compute_perimeter, path="perimeter")
+
+def _compute_roughness(result):
+    #h = heights.get_by_result(result)
+    #height_diff = abs(h - h.mean()).sum()
+    height_diff = heights.get_by_result(result).std()
+    if height_diff > 1e-4:
+        return perimeter.get_by_result(result)/height_diff
+    else:
+        return 0
+roughness = Field(func=_compute_roughness, path="roughness")
 
 def _compute_coverages(result):
     return result.image.sum(axis=1)/float(result.spec.width)
