@@ -469,20 +469,27 @@ def _compute_mean_cell_height_ratio(result):
 mean_cell_height_ratio = Field(func=_compute_mean_cell_height_ratio, path="mean_cell_height_ratio")
 
 def _compute_overhangs(result):
-    overhangs = np.zeros(result.spec.width, int)
-    empty_count = np.zeros_like(overhangs)
-
-    for row in range(get_height_dist(result)['max']):
+    oh = np.zeros(result.spec.width, np.uint16)
+    empty_count = np.zeros_like(oh)
+    max_height = util.compute_heights(result.image).max()
+    for row in range(max_height):
         alive = result.image[row]
-        overhangs += empty_count*alive
+        oh += empty_count*alive
         empty_count += 1
         empty_count[alive] = 0
 
-    return overhangs
+    return oh
 overhangs = VariableField(func=_compute_overhangs,
                           shape=lambda r: r.spec.width,
                           path="overhangs",
                           column=tb.UInt16Col)
+
+def _compute_mean_overhang(result):
+    oh = overhangs.get_by_result(result)
+    return oh.mean()/result.image.sum()
+mean_overhang = Field(func=_compute_mean_overhang,
+                      path="mean_overhang",
+                      column=tb.Float32Col())
 
 def _compute_x_correlations(result):
     distances = range(1, result.spec.width/2)
@@ -547,3 +554,35 @@ def _compute_light_exposure(result):
     light = np.exp(-cum_sum/penetration_depth)
     return (light*result.image).sum()
 light_exposure = Field(func=_compute_light_exposure, path="light_exposure")
+
+def _compute_horizontal_surface_area(result):
+    # contours = [cv2.approxPolyDP(c, 2, True) for c in _compute_contours(result.int_image)]
+    contours = _compute_contours(result.int_image)
+    vectors = [np.diff(c, axis=0) for c in contours]
+
+    positive = sum(np.abs(v[:, 0, 0]).sum() for v in vectors)
+    total = sum(v[:, 0, 0].sum() for v in vectors)
+    return float(positive - total)/result.int_image.shape[1]
+
+horizontal_surface_area = Field(func=_compute_horizontal_surface_area, 
+                                path='horizontal_surface_area')
+
+
+def _compute_b2r(result):
+    return (result.spec.boundary_layer**2)*result.spec.media_ratio
+b2r = Field(func=_compute_b2r, path='b2r')
+
+def _compute_recip_b2r(result):
+    return 1.0/((result.spec.boundary_layer**2)*result.spec.media_ratio)
+recip_b2r = Field(func=_compute_recip_b2r, path='recip_b2r')
+
+def _compute_br(result):
+    return (result.spec.boundary_layer)*result.spec.media_ratio
+br = Field(func=_compute_br, path='br')
+
+def _compute_growth_time(result):
+    indices = np.nonzero(result.mass == 0)[0]
+    return indices[0] if indices.size > 0 else result.mass.size
+growth_time = Field(func=_compute_growth_time, 
+                    path='growth_time', 
+                    column=tb.UInt32Col())

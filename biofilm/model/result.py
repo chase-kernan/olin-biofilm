@@ -29,7 +29,7 @@ class Result(util.TableObject):
 
     def _on_get(self, row):
         self.image = _get_image(self.uuid, self.spec.shape)
-        #self.mass = _get_mass(self.uuid, self.spec.stop_on_time)
+        self.mass = _get_mass(self.uuid, self.spec.stop_on_time)
 
     def _fill_row(self, row):
         util.TableObject._fill_row(self, row)

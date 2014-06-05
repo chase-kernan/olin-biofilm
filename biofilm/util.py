@@ -225,6 +225,10 @@ class TableObject(object):
         return len(cls.table.raw)
 
     @classmethod
+    def count(cls):
+        return cls.table.raw.nrows
+
+    @classmethod
     def _lookup_by_uuid(cls, uuid):
         return cls.table.read_single('uuid=="{0}"'.format(uuid))
 

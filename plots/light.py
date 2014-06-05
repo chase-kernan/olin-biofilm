@@ -14,12 +14,14 @@ from matplotlib import pyplot as plt
 # -----
 
 def compute():
-    an.mass.compute_specs(recompute=True)
-    an.convex_density.compute_specs(recompute=True)
-    an.mean_cell_height.compute_specs(recompute=True)
-    an.heights.compute_specs(recompute=True)
-    an.perimeter.compute_specs(recompute=True)
-    an.roughness.compute_specs(recompute=True)
+    # an.mass.compute_specs(recompute=True)
+    # an.convex_density.compute_specs(recompute=True)
+    # an.mean_cell_height.compute_specs(recompute=True)
+    # an.heights.compute_specs(recompute=True)
+    # an.perimeter.compute_specs(recompute=True)
+    # an.roughness.compute_specs(recompute=True)
+    # an.mean_overhang.compute_specs(recompute=True)
+    an.horizontal_surface_area.compute_specs()
 compute()
 
 query = '(light_penetration >= 0.1) & (light_penetration <= 16)'
@@ -64,3 +66,15 @@ if True:
     with plot_to_file('light/penetration_vs_monod-roughness'):
         an.roughness.phase_diagram_2d('light_penetration', 'light_monod',
                                       num_cells=(50, 20), spec_query=query)
+
+# OVERHANG
+if True:
+    with plot_to_file('light/penetration_vs_monod-overhang'):
+        an.mean_overhang.phase_diagram_2d('light_penetration', 'light_monod',
+                                          num_cells=(50, 20), spec_query=query)
+
+# HORIZONTAL SA
+if True:
+    with plot_to_file('light/penetration_vs_monod-horizontal_sa'):
+        an.horizontal_surface_area.phase_diagram_2d('light_penetration', 'light_monod',
+                                                    num_cells=(50, 20), spec_query=query)

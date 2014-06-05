@@ -7,8 +7,9 @@ from biofilm.model import runner, result
 import numpy as np
 
 builder = SpecBuilder()
-builder.add('stop_on_mass', 5000)
-builder.add('boundary_layer', *range(1, 11))
+builder.add('stop_on_mass', 4000)
+builder.add('stop_on_time', 20000)
+builder.add('boundary_layer', *range(1, 9))
 builder.add('light_penetration', 0)
 builder.add('tension_power', 2)
 builder.add('distance_power', 2)
@@ -22,6 +23,9 @@ builder.build()
 for i, spec in enumerate(Spec.all()):
     print i, 'of', total
     for _ in range(3):
-        result.from_model(runner.run(spec)).save()
+        model = runner.run(spec)
+        print ',',
+        result.from_model(model).save()
+        print '.',
 
 print 'done!'
