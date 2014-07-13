@@ -34,12 +34,12 @@ class Result(util.TableObject):
     def _fill_row(self, row):
         util.TableObject._fill_row(self, row)
         _save_image(self.uuid, self.image)
-        _save_mass(self.uuid, self.mass)
+        #_save_mass(self.uuid, self.mass)
 
     def _on_delete(self):
         util.TableObject._on_delete(self)
         _delete_image(self.uuid, self.spec.shape)
-        _delete_mass(self.uuid, self.spec.stop_on_time)
+        #_delete_mass(self.uuid, self.spec.stop_on_time)
 
 class ResultTable(tb.IsDescription):
     uuid = util.make_uuid_col()
