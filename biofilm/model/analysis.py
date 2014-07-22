@@ -15,7 +15,10 @@ from matplotlib import pyplot as plt
 from itertools import chain
 from itertools import groupby
 
-plt.set_cmap('hot') # ugh, rainbow cmaps...
+try:
+    from matplotlib import pyplot as plt
+    plt.set_cmap('hot') # ugh, rainbow cmaps...
+except ImportError: pass
 
 class Field(object):
 
