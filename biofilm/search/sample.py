@@ -1,18 +1,15 @@
 #!/usr/bin/python
 
-import smtplib
-from email.MIMEMultipart import MIMEMultipart
-from email.MIMEText import MIMEText
-
 param_ranges = {
     'stop_on_mass': 4000,
-    'stop_on_time': 20000,
-    'boundary_layer': 5,
-    'light_penetration': (0.1, 32),
-    'tension_power': (0.1, 4),
-    'distance_power': (0.1, 4),
+    'stop_on_time': 60000,
+    'stop_on_no_growth': 1000,
+    'boundary_layer': 7,
+    'light_penetration': (0.1, 50),
+    'tension_power': (0.1, 3),
+    'distance_power': (0.1, 3),
     'initial_cell_spacing': 2,
-    'media_ratio': (0.01, 1.2),
+    'media_ratio': (0.01, 0.60),
     'media_monod': (0.01, 1),
     'light_monod': (0.01, 1)
 }
@@ -38,33 +35,6 @@ def run_sample(runner_id):
         s.save()
         result.from_model(runner.run(s)).save()
         print i,
-
-        if i % 1000 == 0:
-            mail('chase.kernan+biofilm@gmail.com', 
-                 'Progress for {0}'.format(runner_id), 
-                 str(i))
-
-    mail('chase.kernan+biofilm@gmail.com', 
-         '{0} done'.format(runner_id), 
-         '')
-
-def mail(to, subject, text):
-    msg = MIMEMultipart()
-
-    msg['From'] = "chase.kernan@gmail.com"
-    msg['To'] = to
-    msg['Subject'] = subject
-
-    msg.attach(MIMEText(text))
-
-    mailServer = smtplib.SMTP("smtp.gmail.com", 587)
-    mailServer.ehlo()
-    mailServer.starttls()
-    mailServer.ehlo()
-    mailServer.login("chase.kernan@gmail.com", "Lo$4Diablos")
-    mailServer.sendmail("chase.kernan@gmail.com", to, msg.as_string())
-    # Should be mailServer.quit(), but that crashes...
-    mailServer.close()
 
 import sys
 arg = sys.argv[1]
@@ -116,12 +86,14 @@ elif arg == 'dump':
             param_features.append(param)
 
     with open(path + '.dump', 'w') as dump:
-        dump.write(','.join(param_features + ['hsa']) + '\n')
+        dump.write(','.join(param_features + ['mass', 'perimeter', 'hsa']) + '\n')
 
         for i, res in enumerate(result.Result.all()):
             for param in param_features:
                 dump.write('{0},'.format(getattr(res.spec, param)))
-            dump.write('{0}\n'.format(analysis.horizontal_surface_area.func(res)))
+            dump.write('{},{},{},\n'.format(analysis.mass.func(res),
+                                            analysis.perimeter.func(res),
+                                            analysis.horizontal_surface_area.func(res)))
 elif arg == 'analyze_dump':
     import numpy as np
     import os
