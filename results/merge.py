@@ -32,7 +32,7 @@ def merge_table_into(table, base_table):
     base_table.append(table.read())
 
 if __name__ == '__main__':
-    #import sys
-    #merge(sys.argv[1], sys.argv[2:])
+    import sys
+    merge(sys.argv[1], sys.argv[2:])
 
-    merge('merged_sample_new.h5', ['sample_new{0}.h5'.format(i) for i in range(32)])
+    #merge('merged_sample_new.h5', ['sample_new{0}.h5'.format(i) for i in range(32)])

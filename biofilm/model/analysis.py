@@ -231,12 +231,27 @@ class Field(object):
     def scatter_plot(self, y_field, spec_query=None, statistic='mean',
                      show=False, **plot_args):
         specs = self._query_specs(spec_query)
-        xs = np.empty(len(specs), float)
-        ys = np.empty_like(xs)
+        print '# specs = ', len(specs)
 
-        for i, spec in enumerate(specs):
-            xs[i] = self._get_statistic(spec, statistic)
-            ys[i] = y_field._get_statistic(spec, statistic)
+        if statistic == 'all':
+            xs = []
+            ys = []
+
+            for spec in specs:
+                matching = "spec_uuid=='{0}'".format(spec.uuid)
+                for res in result.Result.where(matching):
+                    xs.append(self.get_by_result(res))
+                    ys.append(y_field.get_by_result(res))
+
+            xs = np.array(xs)
+            ys = np.array(ys)
+        else:
+            xs = np.empty(len(specs), float)
+            ys = np.empty_like(xs)
+
+            for i, spec in enumerate(specs):
+                xs[i] = self._get_statistic(spec, statistic)
+                ys[i] = y_field._get_statistic(spec, statistic)
 
         plt.plot(xs, ys, '.', **plot_args)
         plt.xlabel(self.path)

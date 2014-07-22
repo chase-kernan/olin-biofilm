@@ -9,7 +9,7 @@ def dump(h5, dump_dir, spec_query=None, naming_fields=None):
     
     try:
         os.makedirs(dump_dir)
-    except OSError:
+    except:
         pass
 
     from biofilm.model.result import Result
@@ -23,7 +23,6 @@ def dump(h5, dump_dir, spec_query=None, naming_fields=None):
         specs = Spec.all()
 
     for spec in specs:
-        print spec
         results = Result.where('spec_uuid=="{0}"'.format(spec.uuid))
         for i, result in enumerate(results):
             if naming_fields:
@@ -43,5 +42,8 @@ def dump(h5, dump_dir, spec_query=None, naming_fields=None):
 
 if __name__ == '__main__':
     import sys
-    dump(*sys.argv[1:], naming_fields='boundary_layer,media_ratio')
+    # dump('b2r', 'model_images/b2r/low', '((boundary_layer**2)*(media_ratio))<4',
+    #      naming_fields='boundary_layer,media_ratio')
+    dump('b2r', 'model_images/b2r/high', '(26<((boundary_layer**2)*(media_ratio)))&(((boundary_layer**2)*(media_ratio))<28)',
+         naming_fields='boundary_layer,media_ratio')
 
