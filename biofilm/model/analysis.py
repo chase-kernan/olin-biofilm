@@ -11,7 +11,6 @@ import tables as tb
 from biofilm import util
 from biofilm.model import result
 from scipy import interpolate
-from matplotlib import pyplot as plt
 from itertools import chain
 from itertools import groupby
 
