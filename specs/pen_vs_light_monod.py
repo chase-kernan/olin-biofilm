@@ -4,7 +4,7 @@ pen = int(sys.argv[1])
 print 'penetration = {}'.format(pen)
 
 from biofilm import util
-util.set_h5(util.results_h5_path('pen_vs_light_monod_pen{}'.format(pen)))
+util.set_h5(util.results_h5_path('pen_vs_light_monod_{}'.format(pen)))
 
 from biofilm.model.spec import Spec, SpecBuilder
 from biofilm.model import runner, result, analysis as an
