@@ -1,6 +1,6 @@
 
 from biofilm import util
-util.set_h5(util.results_h5_path('pen_vs_light_monod'))
+util.set_h5(util.results_h5_path('pen_vs_light_monod_part2'))
 
 from biofilm.model import analysis as an
 from biofilm.model import spec as sp
@@ -11,6 +11,7 @@ from plots.util import plot_to_file
 
 from matplotlib import pyplot as plt
 import numpy as np
+from scipy import interpolate
 
 import pickle
 import sys
@@ -18,7 +19,7 @@ import sys
 command = sys.argv[1]
 
 if command == 'dump':
-    num_specs = len(sp.Spec)
+    num_specs = sp.Spec.table.raw.nrows
     print num_specs
     dtype = [('pen', float),
              ('monod', float),
@@ -39,7 +40,7 @@ if command == 'dump':
         data[i]['cell_height'] = an.mean_cell_height.get_by_spec(spec)['mean']
         print i, 
 
-    np.save('dump/pen_vs_light_monod')
+    np.save('dump/pen_vs_light_monod', data)
 
 if command == 'baseline':
     def get_light_indep_baseline(n=10, fields=['mass', 'convex_density', 'perimeter', 'horizontal_surface_area']):
@@ -47,9 +48,9 @@ if command == 'baseline':
 
         results = []
         for _ in range(n):
-            spec = sp.Spec(stop_on_mass=4000, stop_on_time=50000, stop_on_no_growth=1000,
-                           boundary_layer=5, light_penetration=0, tension_power=1, 
-                           distance_power=2, media_ratio=1, media_monod=0.25)
+            spec = sp.Spec(stop_on_mass=4000, stop_on_time=60000, stop_on_no_growth=1000,
+                           boundary_layer=7, light_penetration=0, tension_power=1, 
+                           distance_power=2, media_ratio=0.51, media_monod=0.25)
             spec.save()
             res = result.from_model(runner.run(spec))
             res.save()
@@ -63,26 +64,26 @@ if command == 'baseline':
             means[field] = values.mean()
             stds[field] = values.std()
 
-        return means, std
+        return means, stds
 
     means = get_light_indep_baseline()
     with open('plots/pen_vs_light_monod-means.cache', 'wb') as f:
         pickle.dump(means, f)
 
 if command == 'plot':
-    data = np.load('dump/pen_vs_light_monod_base')
+    data = np.load('dump/pen_vs_light_monod.npy')
 
     with open('plots/pen_vs_light_monod-means.cache', 'rb') as f:
-        baseline_means = pickle.load(f)
+        baseline_means, baseline_stds = pickle.load(f)
 
-    print baseline_means
+    print baseline_means, baseline_stds
 
     query = 'light_penetration > 2' # '(light_penetration >= 0.1) & (light_penetration <= 16)'
     
-    def plot_phase(field, num_cells=(64, 30)):
-        xs = data['pen']
-        ys = data['monod']
-        values = data[field]
+    def plot_phase(field, num_cells=(20, 20), **plot_args):
+        xs = np.reshape(data['pen'], (len(data), 1))
+        ys = np.reshape(data['monod'], (len(data), 1))
+        values = np.reshape(data[field], (len(data), 1))
 
         xMin, xMax = xs.min(), xs.max()
         yMin, yMax = ys.min(), ys.max()
@@ -110,5 +111,11 @@ if command == 'plot':
 
     with plot_to_file('pen_vs_light_monod/perimeter'):
         plot_phase('perimeter')
+    with plot_to_file('pen_vs_light_monod/mass'):
+        plot_phase('mass')
+    with plot_to_file('pen_vs_light_monod/hsa'):
+        plot_phase('hsa')
+    with plot_to_file('pen_vs_light_monod/convex_density'):
+        plot_phase('convex_density')
 
 
