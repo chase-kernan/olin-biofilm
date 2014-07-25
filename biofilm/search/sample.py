@@ -91,7 +91,7 @@ elif arg == 'dump':
         for i, res in enumerate(result.Result.all()):
             for param in param_features:
                 dump.write('{0},'.format(getattr(res.spec, param)))
-            dump.write('{},{},{},\n'.format(analysis.mass.func(res),
+            dump.write('{},{},{}\n'.format(analysis.mass.func(res),
                                             analysis.perimeter.func(res),
                                             analysis.horizontal_surface_area.func(res)))
 elif arg == 'analyze_dump':
