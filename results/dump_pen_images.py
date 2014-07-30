@@ -29,7 +29,7 @@ def dump(h5, dump_dir, spec_query=None, naming_fields=None):
             if naming_fields:
                 name = "-".join("{0}{1:.3f}".format(f, getattr(spec, f))
                                 for f in naming_fields.split(','))
-                name += "-perimeter{:.3f}".format(an.perimeter.func(result))
+                name += "-hsa{:.3f}".format(an.horizontal_surface_area.func(result))
                 name += "-{0}.png".format(i)
             else:
                 name = "{0}-{1}.png".format(spec.uuid, result.uuid)
@@ -40,8 +40,11 @@ def dump(h5, dump_dir, spec_query=None, naming_fields=None):
             color = np.zeros(image.shape + (3,), dtype=np.uint8) 
             color[:, :, 2] = image
             cv2.imwrite(path, color)
+            break
 
 if __name__ == '__main__':
     import sys
-    dump(*sys.argv[1:], naming_fields='boundary_layer,media_ratio')
+    dump('pen_vs_light_monod_7-27', 'model_images/pen_vs_light_monod', 
+         spec_query='(light_monod>0.23)&(light_monod<0.27)', 
+         naming_fields='light_penetration')
 
