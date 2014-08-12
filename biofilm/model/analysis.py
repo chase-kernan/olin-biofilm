@@ -133,6 +133,24 @@ class Field(object):
         plt.ylabel(self.path)
         if show: plt.show()
 
+    def errorbar(self, parameter, spec_query=None, show=False, **plot_args):
+        specs = self._query_specs(spec_query)
+        
+        shape = len(specs),
+        xs = np.empty(shape, float)
+        ys = np.empty(shape, float)
+        sigmas = np.empty(shape, float)
+        
+        for i, spec in enumerate(specs):
+            xs[i] = float(getattr(spec, parameter))
+            ys[i] = self._get_statistic(spec, 'mean')
+            sigmas[i] = self._get_statistic(spec, 'std')
+
+        plt.errorbar(xs, ys, yerr=sigmas, **plot_args)
+        plt.xlabel(parameter)
+        plt.ylabel(self.path)
+        if show: plt.show()
+
     def phase_diagram_2d(self, parameter1, parameter2, num_cells=50, 
                          spec_query=None, statistic='mean', show=False, 
                          **plot_args):

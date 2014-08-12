@@ -12,7 +12,7 @@ import numpy as np
 
 builder = SpecBuilder()
 builder.add('stop_on_mass', 4000)
-builder.add('stop_on_time', 60000)
+builder.add('stop_on_time', 200000)
 builder.add('stop_on_no_growth', 1000)
 builder.add('boundary_layer', 7)
 builder.add('light_penetration', pen/2.0)

@@ -84,7 +84,11 @@ if command == 'plot':
     def plot_phase(field, num_cells=(64, 32), **plot_args):
         xs = np.reshape(data['pen'], (len(data), 1))
         ys = np.reshape(data['monod'], (len(data), 1))
-        values = np.reshape(data[field], (len(data), 1))
+
+        values = data[field].copy()
+        values[data['mass'] < 3700] = 0
+        values[data['pen'] < 1] = 0
+        values = np.reshape(values, (len(data), 1))
 
         xMin, xMax = xs.min(), xs.max()
         yMin, yMax = ys.min(), ys.max()
@@ -102,7 +106,7 @@ if command == 'plot':
         interp = interpolate.griddata(np.hstack((xs, ys)), 
                                       values, 
                                       np.vstack((grid[0].flat, grid[1].flat)).T, 
-                                      'linear')
+                                      'nearest')
         valueGrid = np.reshape(interp, grid[0].shape)
         
         plt.pcolormesh(grid[0], grid[1], valueGrid, **plot_args)

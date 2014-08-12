@@ -27,9 +27,9 @@ def compute():
     pass
 #compute()
 
-query = '(boundary_layer>=1)&(boundary_layer<=8)'
+query = '(boundary_layer>=3)&(boundary_layer<=8)'
 
-if False:
+if True:
     b2r, perimeter = an.b2r.scatter_plot(an.perimeter, spec_query=query, 
                                          statistic='all')
     np.savez('plots/images/b2r/b2r.npz', b2r=b2r, perimeter=perimeter)
