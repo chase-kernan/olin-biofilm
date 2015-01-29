@@ -12,10 +12,10 @@ from itertools import product
 DEFAULT_PARAMETERS = {
     'stop_on_mass': 2500,
     'stop_on_time': 20000,
-    'stop_on_height': 32,
+    'stop_on_height': 40,
     'stop_on_no_growth': 1000,
     'width': 256,
-    'height': 32,
+    'height': 40,
     'block_size': 11,
     'boundary_layer': 5,
     'light_penetration': 0,
@@ -84,7 +84,7 @@ class SpecTable(tb.IsDescription):
     height = tb.UInt16Col()
     block_size = tb.UInt8Col()
     boundary_layer = tb.UInt8Col()
-    light_penetration = tb.UInt16Col()
+    light_penetration = tb.Float32Col()
     distance_power = tb.Float32Col()
     tension_power = tb.Float32Col()
     initial_cell_spacing = tb.UInt16Col()

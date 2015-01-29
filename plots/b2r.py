@@ -27,17 +27,28 @@ def compute():
     pass
 #compute()
 
-query = '(boundary_layer>=3)&(boundary_layer<=8)'
+query = '(boundary_layer>=3)&(boundary_layer<=10)'
 
-if True:
+if False:
     b2r, perimeter = an.b2r.scatter_plot(an.perimeter, spec_query=query, 
                                          statistic='all')
     np.savez('plots/images/b2r/b2r.npz', b2r=b2r, perimeter=perimeter)
     plt.clf()
 
+if False:
+    b2r, density = an.b2r.scatter_plot(an.convex_density, spec_query=query,
+                                       statistic='all')
+    np.savez('plots/images/b2r/b2r_density.npz', b2r=b2r, density=density)
+    plt.clf()
+
+if False:
+    b2r, hsa = an.b2r.scatter_plot(an.horizontal_surface_area, spec_query=query,
+                                   statistic='all')
+    np.savez('plots/images/b2r/b2r_hsa.npz', b2r=b2r, hsa=hsa)
+    plt.clf()
 
 # B2R MEAN CELL HEIGHT
-if True:
+if False:
     data = np.load('plots/images/b2r/b2r.npz')
 
     from matplotlib.gridspec import GridSpec
@@ -94,6 +105,62 @@ if True:
         # plt.tight_layout()
 
 
+if True:
+    data = np.load('plots/images/b2r/b2r_density.npz')
+
+    from matplotlib.gridspec import GridSpec
+
+    with plot_to_file('b2r/b2r_vs_density'):
+        plt.figure(figsize=(3.27, 1.15*3.27))
+
+        rows = 9
+        gs1 = GridSpec(rows, 1)
+        gs1.update(top=1.0, bottom=0.15)
+        gs2 = GridSpec(rows, 1)
+        gs2.update(top=1.0, bottom=0.0, hspace=0.05)
+
+        plt.subplot(gs1[:rows-2, 0])
+        plt.plot(data['b2r'], data['density'], 'b.', ms=4, mec='none', 
+                 mfc=(0, 0, 1.0, 0.30))
+        plt.xlim([0, 30])
+        plt.ylim([0.45, 0.95])
+        plt.xlabel('$1/n_s$')
+        plt.ylabel('Convex Hull Density')
+        plt.tick_params(labelsize=8)
+
+        plt.hold(True)
+
+        # Image labels
+        a_loc = 0.040*7**2, 0.812
+        # plt.plot(a_loc[0], a_loc[1], 'ko', ms=8.0, mew=1.5, mfc='none')
+        plt.annotate('A', a_loc, (8, 0.85), size=12, weight='bold',
+                     arrowprops={'facecolor':'black', #'shrink': 0.1,
+                         'arrowstyle':'->', 'linewidth':1.5})
+
+        b_loc = 0.558*7**2, 0.657
+        # plt.plot(a_loc[0], a_loc[1], 'ko', ms=8.0, mew=1.5, mfc='none')
+        plt.annotate('B', b_loc, (24.5, 0.76), size=12, weight='bold',
+                     arrowprops={'facecolor':'black', #'shrink': 0.1,
+                         'arrowstyle':'->', 'linewidth':1.5})
+
+        def show_image(label, name):
+            image = cv2.imread('model_images/b2r/' + name)
+            image[:, :, 0] = image[:, :, 2]
+            image[:, :, 2] = 0
+            plt.imshow(image)
+
+            plt.text(-25, 64, label, weight='bold', size=12, va='center', ha='right')
+
+            plt.gca().get_xaxis().set_visible(False)
+            plt.gca().get_yaxis().set_visible(False)
+
+        plt.subplot(gs2[rows-2, 0])
+        show_image('A', 'low/boundary_layer7.000-media_ratio0.040-density0.812-2.png')
+
+        plt.subplot(gs2[rows-1, 0])
+        show_image('B', 'high/boundary_layer7.000-media_ratio0.558-density0.657-0.png')
+
+        # plt.tight_layout()
 
 
 

@@ -28,7 +28,7 @@ def dump(h5, dump_dir, spec_query=None, naming_fields=None):
             if naming_fields:
                 name = "-".join("{0}{1:.3f}".format(f, getattr(spec, f))
                                 for f in naming_fields.split(','))
-                name += "-perimeter{:.3f}".format(an.perimeter.func(result))
+                name += "-density{:.3f}".format(an.convex_density.func(result))
                 name += "-{0}.png".format(i)
             else:
                 name = "{0}-{1}.png".format(spec.uuid, result.uuid)
@@ -42,8 +42,8 @@ def dump(h5, dump_dir, spec_query=None, naming_fields=None):
 
 if __name__ == '__main__':
     import sys
-    # dump('b2r', 'model_images/b2r/low', '((boundary_layer**2)*(media_ratio))<4',
-    #      naming_fields='boundary_layer,media_ratio')
-    dump('b2r', 'model_images/b2r/high', '(26<((boundary_layer**2)*(media_ratio)))&(((boundary_layer**2)*(media_ratio))<28)',
+    dump('b2r', 'model_images/b2r/low', '((boundary_layer**2)*(media_ratio))<4',
          naming_fields='boundary_layer,media_ratio')
+    # dump('b2r', 'model_images/b2r/high', '(26<((boundary_layer**2)*(media_ratio)))&(((boundary_layer**2)*(media_ratio))<28)',
+    #     naming_fields='boundary_layer,media_ratio')
 
