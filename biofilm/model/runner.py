@@ -142,7 +142,7 @@ class Model(object):
             column = columns[i]
 
             write_block(self._cell_block, self.cells, row, column, block_size)
-            cv2.filter2D(self._cell_block, cv2.cv.CV_32F, self._tension_kernel,
+            cv2.filter2D(self._cell_block, cv2.CV_32F, self._tension_kernel,
                          self._probability, borderType=cv2.BORDER_CONSTANT)
             cv2.threshold(self._probability, self._tension_min, 0, 
                           cv2.THRESH_TOZERO, self._probability)
